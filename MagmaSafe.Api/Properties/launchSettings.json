@@ -12,9 +12,10 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "magma-safe",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DefaultConnection": "Server=magmasafe-db-server.mysql.database.azure.com; Port=3306; Database=magmasafedatabase; Uid=magmasafedbroot@magmasafe-db-server; Pwd=DB@root@2021; SslMode=Preferred;"
       }
     },
     "MagmaSafe": {

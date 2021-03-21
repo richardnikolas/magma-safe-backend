@@ -1,0 +1,14 @@
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Repositories.deps.json
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Repositories.dll
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Repositories.pdb
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Borders.dll
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Shared.dll
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Borders.pdb
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\bin\Debug\netcoreapp3.1\MagmaSafe.Shared.pdb
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.csprojAssemblyReference.cache
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.AssemblyInfoInputs.cache
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.AssemblyInfo.cs
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.csproj.CopyComplete
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.dll
+C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Repositories\obj\Debug\netcoreapp3.1\MagmaSafe.Repositories.pdb
