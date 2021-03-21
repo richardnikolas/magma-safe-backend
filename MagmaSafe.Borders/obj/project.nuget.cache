@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "HKp3TBO0bCEFeLil6DL/pHx70hLdQdWk8zf91SpNhjGmVK6FwWovdE2H+Fh00jimhcNhch8182ph0S2lW6sjKA==",
+  "dgSpecHash": "gMtbya+cjIznDxZ/gisBiJalc2Ou4WvVOmXxQiKSQhwL0JG0UjmpsRL33dC0lhYz2Lw/4CxMS37SLNU5+ArZmg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Richard\\source\\repos\\magma-safe-backend\\MagmaSafe.Borders\\MagmaSafe.Borders.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Richard\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\fluentvalidation\\9.5.3\\fluentvalidation.9.5.3.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.13\\microsoft.aspnetcore.jsonpatch.3.1.13.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.13\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.13.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
