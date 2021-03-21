@@ -1,9 +1,0 @@
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\bin\Debug\netcoreapp3.1\MagmaSafe.Shared.deps.json
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\bin\Debug\netcoreapp3.1\MagmaSafe.Shared.dll
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\bin\Debug\netcoreapp3.1\MagmaSafe.Shared.pdb
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.csprojAssemblyReference.cache
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.AssemblyInfoInputs.cache
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.AssemblyInfo.cs
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.csproj.CoreCompileInputs.cache
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.dll
-C:\Users\Richard\source\repos\magma-safe-backend\MagmaSafe.Shared\obj\Debug\netcoreapp3.1\MagmaSafe.Shared.pdb
