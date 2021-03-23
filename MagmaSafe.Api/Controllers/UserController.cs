@@ -10,7 +10,7 @@ using MagmaSafe.Shared.Models;
 
 namespace MagmaSafe.Api.Controllers
 {
-    [Route("api/user")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : Controller
     {
