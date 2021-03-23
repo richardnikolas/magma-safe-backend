@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MagmaSafe.Api.Models;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.Entities;
@@ -10,7 +9,7 @@ using MagmaSafe.Shared.Models;
 
 namespace MagmaSafe.Api.Controllers
 {
-    [Route("api/user")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : Controller
     {
