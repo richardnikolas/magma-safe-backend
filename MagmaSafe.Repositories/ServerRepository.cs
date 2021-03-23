@@ -20,10 +20,10 @@ namespace MagmaSafe.Repositories {
             param.Add("@Id", id, DbType.String);
 
             var whereId = "WHERE id = @Id";
-            return await GetUserQuery(ServerStatements.GET_SERVER, param, whereId, null);
+            return await GetServerQuery(ServerStatements.GET_SERVER, param, whereId, null);
         }
 
-        private async Task<Server> GetUserQuery(string sql, object param, string where, string order = "") {
+        private async Task<Server> GetServerQuery(string sql, object param, string where, string order = "") {
             var fullSql = sql + where + order;
 
             using (var connection = helper.GetConnection()) {
