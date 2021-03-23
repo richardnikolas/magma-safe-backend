@@ -24,10 +24,10 @@ namespace MagmaSafe.Repositories
 
             var whereId = "WHERE id = @Id";
 
-            return await GetUserQuery(SecretStatements.GET_SECRET, param, whereId, null);
+            return await GetSecretQuery(SecretStatements.GET_SECRET, param, whereId, null);
         }
 
-        private async Task<Secret> GetUserQuery(string sql, object param, string where, string order = "")
+        private async Task<Secret> GetSecretQuery(string sql, object param, string where, string order = "")
         {
             var fullSql = sql + where + order;
 

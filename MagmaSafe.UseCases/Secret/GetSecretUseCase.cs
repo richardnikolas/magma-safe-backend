@@ -30,12 +30,12 @@ namespace MagmaSafe.UseCases.Secret
                 }
                 else
                 {
-                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find user with id = {id}"));
+                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find secret with id = {id}"));
                 }
             }
             catch (Exception e)
             {
-                ErrorMessage errorMessage = new ErrorMessage("00.00", $"Unexpected error getting user from id: {id} \n Error: {e.Message}");
+                ErrorMessage errorMessage = new ErrorMessage("00.00", $"Unexpected error getting secret from id: {id} \n Error: {e.Message}");
                 return response.SetInternalServerError(errorMessage.Message, new[] { errorMessage });
             }
         }
