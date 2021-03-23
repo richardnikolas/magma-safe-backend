@@ -3,7 +3,7 @@ using MagmaSafe.Borders.Shared;
 
 namespace MagmaSafe.Borders.UseCases
 {
-    public interface IHealthCheckUseCase : IUseCaseOnlyResponse<HealthCheckStatus>
+    public interface IHealthCheckUseCase : IUseCaseOnlyResponse<SecretStatus>
     {
     }
 }
