@@ -10,9 +10,9 @@ using MagmaSafe.Shared.Models;
 namespace MagmaSafe.UseCases.Server {
     public class GetServerUseCase : IGetServerUseCase {
 
-        private readonly IServersRepository serverRepository;
+        private readonly IServerRepository serverRepository;
 
-        public GetServerUseCase(IServersRepository serverRepository) {
+        public GetServerUseCase(IServerRepository serverRepository) {
             this.serverRepository = serverRepository;
         }
 
@@ -26,16 +26,13 @@ namespace MagmaSafe.UseCases.Server {
                     return response.SetSuccess(server);
                 }
                 else {
-                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find user with id = {id}"));
+                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find server with id = {id}"));
                 }
             }
             catch (Exception e) {
-                ErrorMessage errorMessage = new ErrorMessage("00.00", $"Unexpected error getting user from id: {id} \n Error: {e.Message}");
+                ErrorMessage errorMessage = new ErrorMessage("00.00", $"Unexpected error getting server from id: {id} \n Error: {e.Message}");
                 return response.SetInternalServerError(errorMessage.Message, new[] { errorMessage });
             }
         }
-
-
-
     }
 }

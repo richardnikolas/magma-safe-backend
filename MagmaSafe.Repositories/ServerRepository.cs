@@ -7,7 +7,7 @@ using MagmaSafe.Borders.Repositories.Helpers;
 using MagmaSafe.Repositories.SQLStatements;
 
 namespace MagmaSafe.Repositories {
-    public class ServerRepository : IServersRepository {
+    public class ServerRepository : IServerRepository {
 
         private readonly IRepositoryHelper helper;
 
@@ -15,13 +15,11 @@ namespace MagmaSafe.Repositories {
             this.helper = helper;
         }
 
-
         public async Task<Server> GetById(string id) {
             var param = new DynamicParameters();
             param.Add("@Id", id, DbType.String);
 
             var whereId = "WHERE id = @Id";
-
             return await GetUserQuery(ServerStatements.GET_SERVER, param, whereId, null);
         }
 
@@ -32,9 +30,5 @@ namespace MagmaSafe.Repositories {
                 return connection.QueryFirstOrDefault<Server>(fullSql, param);
             }
         }
-
-
-
-
     }
 }

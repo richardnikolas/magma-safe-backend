@@ -3,7 +3,7 @@ using MagmaSafe.Borders.Entities;
 using System.Threading.Tasks;
 
 namespace MagmaSafe.Borders.Repositories {
-    public interface IServersRepository {
+    public interface IServerRepository {
 
         Task<Server> GetById(string id);
     }

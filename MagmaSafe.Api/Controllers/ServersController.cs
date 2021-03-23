@@ -15,7 +15,6 @@ namespace MagmaSafe.Api.Controllers {
     [ApiController]
     public class ServersController {
 
-
         readonly IActionResultConverter actionResultConverter;
         readonly IGetServerUseCase _getServerUseCase;
 
@@ -31,8 +30,5 @@ namespace MagmaSafe.Api.Controllers {
             var response = await _getServerUseCase.Execute(id);
             return actionResultConverter.Convert(response);
         }
-
-
-
     }
 }
