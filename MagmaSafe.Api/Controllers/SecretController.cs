@@ -24,7 +24,7 @@ namespace MagmaSafe.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Secret))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<IActionResult> Get(string id)
         {
