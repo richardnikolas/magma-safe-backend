@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MagmaSafe.Borders.UseCases;
+using MagmaSafe.Borders.UseCases.User;
 using MagmaSafe.Borders.Repositories;
 using MagmaSafe.Borders.Shared;
 using MagmaSafe.Shared.Models;

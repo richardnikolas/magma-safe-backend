@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using MagmaSafe.Borders.UseCases;
+using MagmaSafe.Borders.UseCases.Server;
 using MagmaSafe.Borders.Repositories;
 using MagmaSafe.Borders.Shared;
 using MagmaSafe.Shared.Models;
