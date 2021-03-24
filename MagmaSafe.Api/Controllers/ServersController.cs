@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.Entities;
-using MagmaSafe.Borders.UseCases;
+using MagmaSafe.Borders.UseCases.Server;
 using MagmaSafe.Shared.Models;
 
 namespace MagmaSafe.Api.Controllers {
