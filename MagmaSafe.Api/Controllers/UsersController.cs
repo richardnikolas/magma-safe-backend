@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MagmaSafe.Api.Models;
 using System.Net;
 using System.Threading.Tasks;
@@ -12,13 +11,13 @@ namespace MagmaSafe.Api.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         readonly IActionResultConverter actionResultConverter;
         readonly IGetUserUseCase _getUserUseCase;
         readonly ICreateUserUseCase _createUserUseCase;
 
-        public UserController(IActionResultConverter actionResultConverter, IGetUserUseCase getUserUseCase, ICreateUserUseCase createUserUseCase)
+        public UsersController(IActionResultConverter actionResultConverter, IGetUserUseCase getUserUseCase, ICreateUserUseCase createUserUseCase)
         {
             this.actionResultConverter = actionResultConverter;
             _getUserUseCase = getUserUseCase;
