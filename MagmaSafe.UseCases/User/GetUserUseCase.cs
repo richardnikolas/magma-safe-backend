@@ -24,14 +24,11 @@ namespace MagmaSafe.UseCases.User
             {
                 var user = await userRepository.GetById(id);
 
-                if (user != null)
-                {
+                if (user != null)                
                     return response.SetSuccess(user);
-                }
-                else
-                {
-                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find user with id = {id}"));
-                }
+                
+                else                
+                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find user with id = {id}"));                
             }
             catch (Exception e)
             {

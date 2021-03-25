@@ -26,13 +26,10 @@ namespace MagmaSafe.UseCases.User
                 var userId = await userRepository.CreateUser(request);
 
                 if (userId != null)
-                {
                     return response.SetSuccess(userId);
-                }
+                
                 else
-                {
-                    return response.SetInternalServerError($"Unable to create user with request = {request}");
-                }
+                    return response.SetInternalServerError($"Unable to create user with request = {request}");                
             }
             catch (Exception e)
             {
