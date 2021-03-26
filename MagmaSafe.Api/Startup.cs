@@ -5,24 +5,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Dapper;
-using System;
-using System.Data.Common;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Globalization;
-using System.Reflection;
 using MagmaSafe.Api.Models;
 using MagmaSafe.Api.Extensions;
 using MagmaSafe.Api.Configurations;
-using MagmaSafe.Repositories.Helpers;
 using MagmaSafe.Shared.Helpers;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace MagmaSafe
 {
@@ -75,6 +67,18 @@ namespace MagmaSafe
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                     options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                 });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "MagmaSafe Backend",
+                    Version = "v1"
+                });
+
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MagmaSafe.XML");
+                c.IncludeXmlComments(filePath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,10 +97,19 @@ namespace MagmaSafe
                 SupportedUICultures = supportedCultures,
             });
 
+            app.UseStaticFiles();
+            
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
+            }).UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "MagmaSafe API v1");
+                c.RoutePrefix = "api-docs";
+            });            
+
             app.UseCors(CorsPolicy);
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

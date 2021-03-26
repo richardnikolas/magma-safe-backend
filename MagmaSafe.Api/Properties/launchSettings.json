@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "magma-safe",
+      "launchUrl": "api-docs",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ConnectionStrings__DefaultConnection": "Server=magmasafe-db-server.mysql.database.azure.com; Port=3306; Database=magmasafedatabase; Uid=magmasafedbroot@magmasafe-db-server; Pwd=DB@root@2021; SslMode=Preferred;"
