@@ -36,17 +36,32 @@ namespace MagmaSafe.Repositories
             var param = new DynamicParameters();
 
             var newId = Guid.NewGuid().ToString();
+            var encryptedPassword = securityHelper.MD5Hash(request.Password);
 
             param.Add("@Id", newId, DbType.String);
             param.Add("@Name", request.Name, DbType.String);
             param.Add("@Email", request.Email, DbType.String);
-            param.Add("@Password", securityHelper.MD5Hash(request.Password), DbType.String);
+            param.Add("@Password", encryptedPassword, DbType.String);
             param.Add("@IsAdmin", request.IsAdmin, DbType.Boolean);
             param.Add("@IsActive", true, DbType.Boolean);
 
             await DBUserQuery(UserStatements.CREATE_USER, param, null);
 
             return newId;
+        }
+
+        public async Task<string> UpdateUserPassword(UpdateUserPasswordRequest request)
+        {
+            var param = new DynamicParameters();
+
+            var newPassword = securityHelper.MD5Hash(request.NewPassword);
+
+            param.Add("@Id", request.UserId, DbType.String);
+            param.Add("@NewPassword", newPassword, DbType.String);
+
+            await DBUserQuery(UserStatements.UPDATE_PASSWORD, param, null);
+
+            return "Password atualizado com sucesso!";
         }
 
         #region Private Methods

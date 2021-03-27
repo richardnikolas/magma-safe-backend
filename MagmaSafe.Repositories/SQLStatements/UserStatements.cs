@@ -11,5 +11,14 @@
                 @Id, @Name, @Email, @Password, @IsAdmin, @IsActive
             )
         ";
+
+        public const string UPDATE_PASSWORD = @"
+            UPDATE
+                User
+            SET 
+                password = @NewPassword 
+            WHERE 
+                id = @Id
+        ";
     }
 }

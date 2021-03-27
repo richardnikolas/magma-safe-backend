@@ -8,5 +8,6 @@ namespace MagmaSafe.Borders.Repositories
     {
         Task<User> GetById(string id);
         Task<string> CreateUser(CreateUserRequest request);
+        Task<string> UpdateUserPassword(UpdateUserPasswordRequest request);
     }
 }

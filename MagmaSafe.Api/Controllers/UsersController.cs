@@ -16,12 +16,19 @@ namespace MagmaSafe.Api.Controllers
         readonly IActionResultConverter actionResultConverter;
         readonly IGetUserUseCase _getUserUseCase;
         readonly ICreateUserUseCase _createUserUseCase;
+        readonly IUpdateUserPasswordUseCase _updateUserPasswordUseCase;
 
-        public UsersController(IActionResultConverter actionResultConverter, IGetUserUseCase getUserUseCase, ICreateUserUseCase createUserUseCase)
+        public UsersController(
+            IActionResultConverter actionResultConverter, 
+            IGetUserUseCase getUserUseCase, 
+            ICreateUserUseCase createUserUseCase,
+            IUpdateUserPasswordUseCase updateUserPasswordUseCase
+        )
         {
             this.actionResultConverter = actionResultConverter;
             _getUserUseCase = getUserUseCase;
             _createUserUseCase = createUserUseCase;
+            _updateUserPasswordUseCase = updateUserPasswordUseCase;
         }
 
         [HttpGet("{id}")]
@@ -40,6 +47,16 @@ namespace MagmaSafe.Api.Controllers
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             var response = await _createUserUseCase.Execute(request);
+            return actionResultConverter.Convert(response);
+        }
+
+        [HttpPost("newPassword")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPasswordRequest request)
+        {
+            var response = await _updateUserPasswordUseCase.Execute(request);
             return actionResultConverter.Convert(response);
         }
     }
