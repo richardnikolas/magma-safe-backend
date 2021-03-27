@@ -24,14 +24,11 @@ namespace MagmaSafe.UseCases.Secret
             {
                 var secret = await secretRepository.GetById(id);
 
-                if (secret != null)
-                {
+                if (secret != null)                
                     return response.SetSuccess(secret);
-                }
-                else
-                {
-                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find secret with id = {id}"));
-                }
+                
+                else                
+                    return response.SetNotFound(new ErrorMessage("00.01", $"Unable to find secret with id = {id}"));                
             }
             catch (Exception e)
             {

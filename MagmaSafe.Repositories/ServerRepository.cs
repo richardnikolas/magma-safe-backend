@@ -37,8 +37,8 @@ namespace MagmaSafe.Repositories
             param.Add("@Id", newId, DbType.String);
             param.Add("@Name", request.Name, DbType.String);
             param.Add("@AdminId", request.AdminId, DbType.String);
-            param.Add("CreatedAt", DateTime.Now, DbType.DateTime);
-            param.Add("UpdatedAt", DateTime.Now, DbType.DateTime);
+            param.Add("@CreatedAt", DateTime.Now, DbType.DateTime);
+            param.Add("@UpdatedAt", DateTime.Now, DbType.DateTime);
 
             await DBServerQuery(ServerStatements.CREATE_SERVER, param);
 
