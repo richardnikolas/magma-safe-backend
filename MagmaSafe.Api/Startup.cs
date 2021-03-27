@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +15,6 @@ using MagmaSafe.Api.Models;
 using MagmaSafe.Api.Extensions;
 using MagmaSafe.Api.Configurations;
 using MagmaSafe.Shared.Helpers;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace MagmaSafe
 {

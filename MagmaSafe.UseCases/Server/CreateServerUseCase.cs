@@ -36,7 +36,7 @@ namespace MagmaSafe.UseCases.Server
                     return response.SetSuccess(serverId);
                 
                 else                
-                    return response.SetInternalServerError($"Unable to create server with request = {request}");                
+                    return response.SetInternalServerError($"Unable to create server with request = {request}");
             }
             catch (Exception e)
             {
