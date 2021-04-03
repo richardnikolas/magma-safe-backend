@@ -31,6 +31,16 @@ namespace MagmaSafe.Repositories
             return await GetUserQuery(UserStatements.GET_USER, param, whereId, null);
         }
 
+        public async Task<User> GetByEmail(string email)
+        {
+            var param = new DynamicParameters();
+            param.Add("@Email", email, DbType.String);
+
+            var whereEmail = "WHERE email = @Email";
+
+            return await GetUserQuery(UserStatements.GET_USER, param, whereEmail, null);
+        }
+
         public async Task<string> CreateUser(CreateUserRequest request)
         {
             var param = new DynamicParameters();
