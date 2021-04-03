@@ -15,12 +15,19 @@ namespace MagmaSafe.Api.Controllers
     {
         readonly IActionResultConverter actionResultConverter;
         readonly IGetUserUseCase _getUserUseCase;
+        readonly IGetUserByEmailUseCase _getUserByEmailUseCase;
         readonly ICreateUserUseCase _createUserUseCase;
 
-        public UsersController(IActionResultConverter actionResultConverter, IGetUserUseCase getUserUseCase, ICreateUserUseCase createUserUseCase)
+        public UsersController(
+            IActionResultConverter actionResultConverter, 
+            IGetUserUseCase getUserUseCase, 
+            IGetUserByEmailUseCase getUserByEmailUseCase,
+            ICreateUserUseCase createUserUseCase
+        )
         {
             this.actionResultConverter = actionResultConverter;
             _getUserUseCase = getUserUseCase;
+            _getUserByEmailUseCase = getUserByEmailUseCase;
             _createUserUseCase = createUserUseCase;
         }
 
@@ -30,6 +37,15 @@ namespace MagmaSafe.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var response = await _getUserUseCase.Execute(id);
+            return actionResultConverter.Convert(response);
+        }
+
+        [HttpGet("email/{email}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            var response = await _getUserByEmailUseCase.Execute(email);
             return actionResultConverter.Convert(response);
         }
 
