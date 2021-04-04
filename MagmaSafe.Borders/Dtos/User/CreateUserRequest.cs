@@ -9,6 +9,5 @@ namespace MagmaSafe.Borders.Dtos.User
         [Required]
         public string Email { get; set; }
         public bool IsAdmin { get; set; } = false;
-        public bool IsActive { get; set; } = false;
     }
 }

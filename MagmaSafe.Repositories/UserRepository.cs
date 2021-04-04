@@ -13,12 +13,10 @@ namespace MagmaSafe.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly IRepositoryHelper helper;
-        private readonly ISecurityHelper securityHelper;
 
-        public UserRepository(IRepositoryHelper helper, ISecurityHelper securityHelper)
+        public UserRepository(IRepositoryHelper helper)
         {
             this.helper = helper;
-            this.securityHelper = securityHelper;
         }
 
         public async Task<User> GetById(string id)

@@ -8,7 +8,7 @@
             INSERT INTO 
                 User
             VALUES (
-                @Id, @Name, @Email, '', @IsAdmin, @IsActive
+                @Id, @Name, @Email, @IsAdmin, @IsActive
             )
         ";
     }
