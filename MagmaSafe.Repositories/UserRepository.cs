@@ -50,7 +50,6 @@ namespace MagmaSafe.Repositories
             param.Add("@Id", newId, DbType.String);
             param.Add("@Name", request.Name, DbType.String);
             param.Add("@Email", request.Email, DbType.String);
-            param.Add("@Password", securityHelper.MD5Hash(request.Password), DbType.String);
             param.Add("@IsAdmin", request.IsAdmin, DbType.Boolean);
             param.Add("@IsActive", true, DbType.Boolean);
 
