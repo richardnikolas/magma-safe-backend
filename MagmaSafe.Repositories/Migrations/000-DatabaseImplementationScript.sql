@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS server (
 	adminId					VARCHAR(40)			NOT NULL,
   	createdAt				DATETIME			NOT NULL,
   	updatedAt				DATETIME			NOT NULL,
+    isFavorite 				BOOLEAN				NOT NULL,
   	CONSTRAINT			FK_adminId FOREIGN KEY (adminId) REFERENCES user(id)
 );
 
