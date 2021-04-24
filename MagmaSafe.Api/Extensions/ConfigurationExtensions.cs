@@ -9,7 +9,7 @@ namespace MagmaSafe.Api.Extensions
         {
             var applicationConfig = source.Get<ApplicationConfig>();
 
-            applicationConfig.Database.ConnectionString = source.GetConnectionString("DefaultConnection");
+            applicationConfig.Database.ConnectionString = source.GetValue<string>("Database:ConnectionString");
             applicationConfig.Database.AssemblyName = source.GetValue<string>("Database:AssemblyName");
             applicationConfig.Database.DbFactoryName = source.GetValue<string>("Database:DbFactoryName");
             applicationConfig.Database.DatabaseName = source.GetValue<string>("Database:DatabaseName");
