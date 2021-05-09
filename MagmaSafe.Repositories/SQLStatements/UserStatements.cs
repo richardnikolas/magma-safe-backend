@@ -4,6 +4,8 @@
     {
         public const string GET_USER = @"SELECT * FROM User ";
 
+        public const string GET_USER_COUNT = @"SELECT COUNT(*) FROM User ";
+
         public const string CREATE_USER = @"
             INSERT INTO 
                 User

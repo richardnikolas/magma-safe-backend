@@ -15,13 +15,20 @@ namespace MagmaSafe.Api.Controllers
     {
         readonly IActionResultConverter actionResultConverter;
         readonly IGetServerUseCase _getServerUseCase;
-        readonly ICreateServerUseCase _createUserUseCase;
+        readonly ICreateServerUseCase _createServerUseCase; 
+        readonly IGetServersByUserIdUseCase _getServersByUserIdUseCase;
 
-        public ServersController(IActionResultConverter actionResultConverter, IGetServerUseCase getServerUseCase, ICreateServerUseCase createServerUseCase) 
+        public ServersController(
+            IActionResultConverter actionResultConverter, 
+            IGetServerUseCase getServerUseCase, 
+            ICreateServerUseCase createServerUseCase, 
+            IGetServersByUserIdUseCase getServerByUserIdUseCase
+        ) 
         {
             this.actionResultConverter = actionResultConverter;
             _getServerUseCase = getServerUseCase;
-            _createUserUseCase = createServerUseCase;
+            _createServerUseCase = createServerUseCase;
+            _getServersByUserIdUseCase = getServerByUserIdUseCase;
         }
 
         [HttpGet("{id}")]
@@ -33,13 +40,22 @@ namespace MagmaSafe.Api.Controllers
             return actionResultConverter.Convert(response);
         }
 
+        [HttpGet("user/{UserId}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Server))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> GetServersOfUsers(string userid) 
+        {
+            var response = await _getServersByUserIdUseCase.Execute(userid);
+            return actionResultConverter.Convert(response);
+        }
+
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(string))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<IActionResult> Create(CreateServerRequest request)
         {
-            var response = await _createUserUseCase.Execute(request);
+            var response = await _createServerUseCase.Execute(request);
             return actionResultConverter.Convert(response);
         }
     }

@@ -7,6 +7,7 @@ using MagmaSafe.Borders.Dtos.Secret;
 using MagmaSafe.Borders.Repositories;
 using MagmaSafe.Borders.Repositories.Helpers;
 using MagmaSafe.Repositories.SQLStatements;
+using System.Collections.Generic;
 
 namespace MagmaSafe.Repositories
 {
@@ -31,6 +32,11 @@ namespace MagmaSafe.Repositories
             return await GetSecretQuery(SecretStatements.GET_SECRET, param, whereId, null);
         }
 
+        public async Task<int> GetCountFromSecret(string where)
+        {
+            return await GetCountQuery(SecretStatements.GET_SECRET_COUNT, null, where);
+        }
+
         public async Task<string> CreateSecret(CreateSecretRequest request)
         {
             var param = new DynamicParameters();
@@ -44,10 +50,22 @@ namespace MagmaSafe.Repositories
             param.Add("@ServerId", request.ServerId, DbType.String);
             param.Add("@CreatedAt", DateTime.Now, DbType.DateTime);
             param.Add("@UpdatedAt", DateTime.Now, DbType.DateTime);
+            param.Add("@LastAccessedByUser", request.UserId, DbType.String);
+            param.Add("@LastAccessed", DateTime.Now, DbType.DateTime);
 
-            await DBServerQuery(SecretStatements.CREATE_SECRET, param, null);
+            await DBQuery(SecretStatements.CREATE_SECRET, param, null);
 
             return newId;
+        }
+
+        public async Task<List<Secret>> GetSecretsByServerId(string id)
+        {
+            var param = new DynamicParameters();
+            param.Add("@ServerId", id, DbType.String);
+
+            var whereId = "WHERE serverId = @serverId";
+
+            return await GetSecretsByServerQuery(SecretStatements.GET_SECRET, param, whereId, null);
         }
 
         #region Private Methods
@@ -62,13 +80,33 @@ namespace MagmaSafe.Repositories
             }
         }
 
-        private async Task<string> DBServerQuery(string sql, object param, string where = "")
+        private async Task<List<Secret>> GetSecretsByServerQuery(string sql, object param, string where, string order = "")
+        {
+            var fullSql = sql + where + order;
+
+            using (var connection = helper.GetConnection())
+            {
+                return await connection.QueryAsync<Secret>(fullSql, param) as List<Secret>;
+            }
+        }
+
+        private async Task<string> DBQuery(string sql, object param, string where = "")
         {
             var fullSql = sql + where;
 
             using (var connection = helper.GetConnection())
             {
                 return await connection.QueryFirstOrDefaultAsync<string>(fullSql, param);
+            }
+        }
+
+        private async Task<int> GetCountQuery(string sql, object param, string where = "")
+        {
+            var fullSql = sql + where;
+
+            using (var connection = helper.GetConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<int>(fullSql, param);
             }
         }
 

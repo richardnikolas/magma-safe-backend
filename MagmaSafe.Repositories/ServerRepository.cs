@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
@@ -28,6 +29,20 @@ namespace MagmaSafe.Repositories
             return await GetServerQuery(ServerStatements.GET_SERVER, param, whereId, null);
         }
 
+        public async Task<List<Server>> GetServersByUserId(string userId) 
+        {
+            var param = new DynamicParameters();
+            param.Add("@UserId", userId, DbType.String);
+
+            var whereId = "LEFT JOIN serversofusers ON (serversofusers.serverId = server.id) WHERE userId = @UserId";
+            return await GetServerByUserIdQuery(ServerStatements.GET_SERVER, param, whereId, null);
+        }
+
+        public async Task<int> GetCountFromServer(string where)
+        {
+            return await GetCountQuery(ServerStatements.GET_SERVER_COUNT, null, where);
+        }
+
         public async Task<string> CreateServer(CreateServerRequest request)
         {
             var param = new DynamicParameters();
@@ -40,7 +55,7 @@ namespace MagmaSafe.Repositories
             param.Add("@CreatedAt", DateTime.Now, DbType.DateTime);
             param.Add("@UpdatedAt", DateTime.Now, DbType.DateTime);
 
-            await DBServerQuery(ServerStatements.CREATE_SERVER, param);
+            await DBQuery(ServerStatements.CREATE_SERVER, param);
 
             return newId;
         }
@@ -57,7 +72,27 @@ namespace MagmaSafe.Repositories
             }
         }
 
-        private async Task<string> DBServerQuery(string sql, object param, string where = "")
+        private async Task<List<Server>> GetServerByUserIdQuery(string sql, object param, string where , string order = "") 
+        {
+            var fullSql = sql + where + order;
+
+            using (var connection = helper.GetConnection()) 
+            {
+                return await connection.QueryAsync<Server>(fullSql, param) as List<Server>; 
+            }
+        }
+
+        private async Task<int> GetCountQuery(string sql, object param, string where = "")
+        {
+            var fullSql = sql + where;
+
+            using (var connection = helper.GetConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<int>(fullSql, param);
+            }
+        }
+
+        private async Task<string> DBQuery(string sql, object param, string where = "")
         {
             var fullSql = sql + where;
 

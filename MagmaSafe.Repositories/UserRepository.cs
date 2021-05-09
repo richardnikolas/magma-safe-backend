@@ -39,6 +39,11 @@ namespace MagmaSafe.Repositories
             return await GetUserQuery(UserStatements.GET_USER, param, whereEmail, null);
         }
 
+        public async Task<int> GetCountFromUser(string where)
+        {
+            return await GetCountQuery(UserStatements.GET_USER_COUNT, null, where);
+        }
+
         public async Task<string> CreateUser(CreateUserRequest request)
         {
             var param = new DynamicParameters();
@@ -65,6 +70,16 @@ namespace MagmaSafe.Repositories
             using (var connection = helper.GetConnection())
             {
                 return await connection.QueryFirstOrDefaultAsync<User>(fullSql, param);
+            }
+        }
+
+        private async Task<int> GetCountQuery(string sql, object param, string where = "")
+        {
+            var fullSql = sql + where;
+
+            using (var connection = helper.GetConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<int>(fullSql, param);
             }
         }
 

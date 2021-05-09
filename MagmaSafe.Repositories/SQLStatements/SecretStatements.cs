@@ -4,6 +4,8 @@
     {
         public const string GET_SECRET = @"SELECT * FROM Secret ";
 
+        public const string GET_SECRET_COUNT = @"SELECT COUNT(*) FROM Secret ";
+
         public const string CREATE_SECRET = @"
             INSERT INTO 
                 Secret
@@ -14,7 +16,9 @@
                 @UserId,
                 @ServerId,
                 @CreatedAt,
-                @UpdatedAt
+                @UpdatedAt,
+                @LastAccessedByUser,
+                @LastAccessed
             )
         ";
     }

@@ -8,6 +8,7 @@ namespace MagmaSafe.Borders.Repositories
     {
         Task<User> GetById(string id);
         Task<User> GetByEmail(string email);
+        Task<int> GetCountFromUser(string where);
         Task<string> CreateUser(CreateUserRequest request);
     }
 }

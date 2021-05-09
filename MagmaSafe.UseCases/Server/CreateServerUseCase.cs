@@ -11,11 +11,17 @@ namespace MagmaSafe.UseCases.Server
     public class CreateServerUseCase : ICreateServerUseCase
     {
         private readonly IServerRepository serverRepository;
+        private readonly IServersOfUserRepository serversOfUserRepository;
         private readonly IUserRepository userRepository;
 
-        public CreateServerUseCase(IServerRepository serverRepository, IUserRepository userRepository)
+        public CreateServerUseCase(
+            IServerRepository serverRepository, 
+            IServersOfUserRepository serversOfUserRepository, 
+            IUserRepository userRepository
+        )
         {
             this.serverRepository = serverRepository;
+            this.serversOfUserRepository = serversOfUserRepository;
             this.userRepository = userRepository;
         }
 
@@ -32,10 +38,21 @@ namespace MagmaSafe.UseCases.Server
 
                 var serverId = await serverRepository.CreateServer(request);
 
+                var serverOfUser = false;
+
                 if (serverId != null)
+                {
+                    CreateServersOfUserRequest createServersOfUserRequest = new CreateServersOfUserRequest(
+                        userId: admin.Id, serverId: serverId
+                    );
+
+                    serverOfUser = await serversOfUserRepository.CreateServerOfUser(createServersOfUserRequest);
+                }
+
+                if (serverOfUser)
                     return response.SetSuccess(serverId);
                 
-                else                
+                else
                     return response.SetInternalServerError($"Unable to create server with request = {request}");
             }
             catch (Exception e)

@@ -16,12 +16,18 @@ namespace MagmaSafe.Api.Controllers
         readonly IActionResultConverter actionResultConverter;
         readonly IGetSecretUseCase _getSecretUseCase;
         readonly ICreateSecretUseCase _createSecretUseCase;
+        readonly IGetSecretByServerUseCase _getSecretByServerUseCase;
 
-        public SecretsController(IActionResultConverter actionResultConverter, IGetSecretUseCase getSecretUseCase, ICreateSecretUseCase createSecretUseCase)
+        public SecretsController(
+            IActionResultConverter actionResultConverter,
+            IGetSecretUseCase getSecretUseCase,
+            ICreateSecretUseCase createSecretUseCase,
+            IGetSecretByServerUseCase getSecretByServerUseCase)
         {
             this.actionResultConverter = actionResultConverter;
             _getSecretUseCase = getSecretUseCase;
             _createSecretUseCase = createSecretUseCase;
+            _getSecretByServerUseCase = getSecretByServerUseCase;
         }
 
         [HttpGet("{id}")]
@@ -32,6 +38,16 @@ namespace MagmaSafe.Api.Controllers
             var response = await _getSecretUseCase.Execute(id);
             return actionResultConverter.Convert(response);
         }
+
+        [HttpGet("servers/{serverId}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Secret))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> GetSecretByServer(string serverId)
+        {
+            var response = await _getSecretByServerUseCase.Execute(serverId);
+            return actionResultConverter.Convert(response);
+        }
+
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(string))]
