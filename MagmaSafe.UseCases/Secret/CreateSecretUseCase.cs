@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 using MagmaSafe.Borders.UseCases.Secret;
 using MagmaSafe.Borders.Dtos.Secret;
 using MagmaSafe.Borders.Repositories;
@@ -12,7 +13,7 @@ namespace MagmaSafe.UseCases.Secret
     {
         private readonly ISecretRepository secretRepository;
         private readonly IServerRepository serverRepository;
-        private readonly IUserRepository userRepository;        
+        private readonly IUserRepository userRepository;
 
         public CreateSecretUseCase(
             ISecretRepository secretRepository,
@@ -31,6 +32,11 @@ namespace MagmaSafe.UseCases.Secret
 
             try
             {
+                if (Constants.ForbiddenWords.Any(request.Name.ToLower().Contains))
+                {
+                    return response.SetInternalServerError($"You tried to create an artifact with one or more forbidden words.");
+                }
+
                 var user = await userRepository.GetById(request.UserId);
                 var server = await serverRepository.GetById(request.ServerId);
 

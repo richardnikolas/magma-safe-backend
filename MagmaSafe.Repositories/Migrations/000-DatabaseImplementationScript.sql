@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS user (
     id						VARCHAR(40)   		NOT NULL PRIMARY KEY,
     name					VARCHAR(50)   		NOT NULL,
     email					VARCHAR(100) 	  	NOT NULL UNIQUE,
-    password				VARCHAR(100)		NOT NULL,
     isAdmin					BOOLEAN				NOT NULL,
     isActive				BOOLEAN				NOT NULL
 );
@@ -32,7 +31,6 @@ CREATE TABLE IF NOT EXISTS server (
 	adminId					VARCHAR(40)			NOT NULL,
   	createdAt				DATETIME			NOT NULL,
   	updatedAt				DATETIME			NOT NULL,
-    isFavorite 				BOOLEAN				NOT NULL,
   	CONSTRAINT			FK_adminId FOREIGN KEY (adminId) REFERENCES user(id)
 );
 
@@ -51,9 +49,7 @@ CREATE TABLE IF NOT EXISTS secret (
   	updatedAt			DATETIME				NOT NULL,
     lastAccessedByUser	VARCHAR(40)				NOT NULL,
     lastAccessed		DATETIME				NOT NULL,
-    
-    
-  	CONSTRAINT FK_userId FOREIGN KEY (userId) REFERENCES user(id),
+	CONSTRAINT FK_userId FOREIGN KEY (userId) REFERENCES user(id),
   	CONSTRAINT FK_serverId FOREIGN KEY (serverId) REFERENCES server(id)
 );
 
@@ -64,9 +60,11 @@ CREATE TABLE IF NOT EXISTS secret (
 +-------------------------------------+
 */
 CREATE TABLE IF NOT EXISTS serversOfUsers (
-  userId			VARCHAR(40)					NOT NULL,
-  serverId			VARCHAR(40)					NOT NULL,
-  CONSTRAINT FK_userIdServers FOREIGN KEY (userId) REFERENCES user(id),
+  userId              VARCHAR(40)               NOT NULL,
+  serverId            VARCHAR(40)               NOT NULL,
+  isFavorite          BOOLEAN                   NOT NULL,
+  PRIMARY KEY (userId, serverId),
+  CONSTRAINT FK_userIdServers   FOREIGN KEY (userId)   REFERENCES user(id),
   CONSTRAINT FK_serverIdServers FOREIGN KEY (serverId) REFERENCES server(id)
 );
   

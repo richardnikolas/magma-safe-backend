@@ -21,5 +21,14 @@
                 @LastAccessed
             )
         ";
+
+        public const string UPDATE_LAST_ACCESSED_BY_USER = @"
+            UPDATE
+                Secret
+            SET
+                lastAccessedByUser = @LastAccessedByUserId
+            WHERE
+                id = @Id
+        ";
     }
 }

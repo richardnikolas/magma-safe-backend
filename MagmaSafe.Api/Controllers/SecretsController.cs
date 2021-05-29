@@ -3,8 +3,8 @@ using MagmaSafe.Api.Models;
 using System.Net;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.Entities;
-using MagmaSafe.Borders.UseCases.Secret;
 using MagmaSafe.Borders.Dtos.Secret;
+using MagmaSafe.Borders.UseCases.Secret;
 using MagmaSafe.Shared.Models;
 
 namespace MagmaSafe.Api.Controllers
@@ -16,18 +16,24 @@ namespace MagmaSafe.Api.Controllers
         readonly IActionResultConverter actionResultConverter;
         readonly IGetSecretUseCase _getSecretUseCase;
         readonly ICreateSecretUseCase _createSecretUseCase;
-        readonly IGetSecretByServerUseCase _getSecretByServerUseCase;
+        readonly IGetSecretsByServerUseCase _getSecretsByServerUseCase;
+        readonly IGetSecretsByUserIdUseCase _getSecretsByUserIdUseCase;
+        readonly IUpdateLastAccessedByUserUseCase _updateLastAccessedByUserUseCase;
 
         public SecretsController(
             IActionResultConverter actionResultConverter,
             IGetSecretUseCase getSecretUseCase,
             ICreateSecretUseCase createSecretUseCase,
-            IGetSecretByServerUseCase getSecretByServerUseCase)
+            IGetSecretsByServerUseCase getSecretByServerUseCase,
+            IGetSecretsByUserIdUseCase getSecretsByUserIdUseCase,
+            IUpdateLastAccessedByUserUseCase updateLastAccessedByUserUseCase)
         {
             this.actionResultConverter = actionResultConverter;
             _getSecretUseCase = getSecretUseCase;
             _createSecretUseCase = createSecretUseCase;
-            _getSecretByServerUseCase = getSecretByServerUseCase;
+            _getSecretsByServerUseCase = getSecretByServerUseCase;
+            _getSecretsByUserIdUseCase = getSecretsByUserIdUseCase;
+            _updateLastAccessedByUserUseCase = updateLastAccessedByUserUseCase;
         }
 
         [HttpGet("{id}")]
@@ -39,15 +45,25 @@ namespace MagmaSafe.Api.Controllers
             return actionResultConverter.Convert(response);
         }
 
-        [HttpGet("servers/{serverId}")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Secret))]
+        [HttpGet("server/{serverId}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(SecretResponseDTO))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
-        public async Task<IActionResult> GetSecretByServer(string serverId)
+        public async Task<IActionResult> GetSecretsByServer(string serverId)
         {
-            var response = await _getSecretByServerUseCase.Execute(serverId);
+            var response = await _getSecretsByServerUseCase.Execute(serverId);
             return actionResultConverter.Convert(response);
         }
 
+        [HttpGet("user/{userId}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(SecretResponseDTO))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> GetSecretByUserId(string userId) 
+        {
+            var response = await _getSecretsByUserIdUseCase.Execute(userId);
+            return actionResultConverter.Convert(response);
+        }
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(string))]
@@ -56,6 +72,16 @@ namespace MagmaSafe.Api.Controllers
         public async Task<IActionResult> Create(CreateSecretRequest request)
         {
             var response = await _createSecretUseCase.Execute(request);
+            return actionResultConverter.Convert(response);
+        }
+
+        [HttpPatch("lastAccessedByUser")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(SecretResponseDTO))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
+        public async Task<IActionResult> UpdateLastUser(UpdateLastAccessedByUserRequest request)
+        {
+            var response = await _updateLastAccessedByUserUseCase.Execute(request);
             return actionResultConverter.Convert(response);
         }
     }

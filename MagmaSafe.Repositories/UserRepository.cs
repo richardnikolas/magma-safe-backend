@@ -93,6 +93,16 @@ namespace MagmaSafe.Repositories
             }
         }
 
+        private async Task<string> GetStringQuery(string sql, object param, string where)
+        {
+            var fullSql = sql + where;
+
+            using (var connection = helper.GetConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<string>(fullSql, param);
+            }
+        }
+
         #endregion
     }
 }

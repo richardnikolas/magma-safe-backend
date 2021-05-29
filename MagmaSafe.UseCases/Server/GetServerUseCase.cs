@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.UseCases.Server;
+using MagmaSafe.Borders.Dtos.Server;
 using MagmaSafe.Borders.Repositories;
 using MagmaSafe.Borders.Shared;
 using MagmaSafe.Shared.Models;
@@ -22,6 +23,9 @@ namespace MagmaSafe.UseCases.Server
 
             try
             {
+                if (!Guid.TryParse(id, out Guid result))
+                    return response.SetBadRequest($"Invalid Guid passed as parameter. Request value = '{id}'");
+
                 var server = await serverRepository.GetById(id);
 
                 if (server != null)

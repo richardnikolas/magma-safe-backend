@@ -33,6 +33,7 @@ namespace MagmaSafe.Api.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<IActionResult> Get(string id)
         {
@@ -42,6 +43,7 @@ namespace MagmaSafe.Api.Controllers
 
         [HttpGet("email/{email}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorMessage))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<IActionResult> GetByEmail(string email)
         {

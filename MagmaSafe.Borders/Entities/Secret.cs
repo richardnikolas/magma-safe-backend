@@ -8,7 +8,9 @@ namespace MagmaSafe.Borders.Entities
         public string Name { get; set; }
         public string MagmaSecret { get; set; }
         public string UserId { get; set; }
-        public string ServerId { get; set; }
+        public string ServerId { get; set; }        
+        public string LastAccessedByUser { get; set; }
+        public DateTime LastAccessed { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

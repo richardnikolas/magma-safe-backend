@@ -22,6 +22,9 @@ namespace MagmaSafe.UseCases.Secret
 
             try
             {
+                if (!Guid.TryParse(id, out Guid result))
+                    return response.SetBadRequest($"Invalid Guid passed as parameter. Request value = '{id}'");
+
                 var secret = await secretRepository.GetById(id);
 
                 if (secret != null)                

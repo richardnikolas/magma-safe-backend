@@ -22,6 +22,9 @@ namespace MagmaSafe.UseCases.User
 
             try
             {
+                if (!Guid.TryParse(id, out Guid result))
+                    return response.SetBadRequest($"Invalid Guid passed as parameter. Request value = '{id}'");
+
                 var user = await userRepository.GetById(id);
 
                 if (user != null)                

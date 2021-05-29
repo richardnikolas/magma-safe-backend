@@ -14,12 +14,10 @@ namespace MagmaSafe.Repositories
     public class SecretRepository : ISecretRepository
     {
         private readonly IRepositoryHelper helper;
-        private readonly ISecurityHelper securityHelper;
 
-        public SecretRepository(IRepositoryHelper helper, ISecurityHelper securityHelper)
+        public SecretRepository(IRepositoryHelper helper)
         {
             this.helper = helper;
-            this.securityHelper = securityHelper;
         }
 
         public async Task<Secret> GetById(string id)
@@ -45,7 +43,7 @@ namespace MagmaSafe.Repositories
 
             param.Add("@Id", newId, DbType.String);
             param.Add("@Name", request.Name, DbType.String);
-            param.Add("@MagmaSecret", securityHelper.MD5Hash(request.MagmaSecret), DbType.String);
+            param.Add("@MagmaSecret", request.MagmaSecret, DbType.String);
             param.Add("@UserId", request.UserId, DbType.String);
             param.Add("@ServerId", request.ServerId, DbType.String);
             param.Add("@CreatedAt", DateTime.Now, DbType.DateTime);
@@ -58,14 +56,36 @@ namespace MagmaSafe.Repositories
             return newId;
         }
 
-        public async Task<List<Secret>> GetSecretsByServerId(string id)
+        public async Task<List<Secret>> GetSecretsByServerId(string serverId)
         {
             var param = new DynamicParameters();
-            param.Add("@ServerId", id, DbType.String);
+            param.Add("@ServerId", serverId, DbType.String);
 
             var whereId = "WHERE serverId = @serverId";
 
             return await GetSecretsByServerQuery(SecretStatements.GET_SECRET, param, whereId, null);
+        }
+
+        public async Task<List<Secret>> GetSecretsByUserId(string userId) 
+        {
+            var param = new DynamicParameters();
+            param.Add("@UserId", userId, DbType.String);
+
+            var whereId = "WHERE userId = @UserId";
+
+            return await GetSecretsByUserQuery(SecretStatements.GET_SECRET, param, whereId, null);
+        }
+
+        public async Task<bool> UpdateLastAccessedByUser(UpdateLastAccessedByUserRequest request)
+        {
+            var param = new DynamicParameters();
+
+            param.Add("@LastAccessedByUserId", request.LastAccessedByUserId, DbType.String);
+            param.Add("@Id", request.SecretId, DbType.String);
+
+            await DBQuery(SecretStatements.UPDATE_LAST_ACCESSED_BY_USER, param, null);
+
+            return true;
         }
 
         #region Private Methods
@@ -86,6 +106,14 @@ namespace MagmaSafe.Repositories
 
             using (var connection = helper.GetConnection())
             {
+                return await connection.QueryAsync<Secret>(fullSql, param) as List<Secret>;
+            }
+        }
+
+        private async Task<List<Secret>> GetSecretsByUserQuery(string sql, object param, string where, string order = "") {
+            var fullSql = sql + where + order;
+
+            using (var connection = helper.GetConnection()) {
                 return await connection.QueryAsync<Secret>(fullSql, param) as List<Secret>;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.Dtos.Server;
 using MagmaSafe.Borders.Shared;
@@ -31,10 +32,18 @@ namespace MagmaSafe.UseCases.Server
 
             try
             {
+                if (Constants.ForbiddenWords.Any(request.Name.ToLower().Contains))
+                {
+                    return response.SetInternalServerError($"You tried to create an artifact with one or more forbidden words.");
+                }
+
                 var admin = await userRepository.GetById(request.AdminId);
 
-                if (admin == null || !admin.IsAdmin)
+                if (admin == null)
                     return response.SetBadRequest($"Unable to find admin with id = {request.AdminId}");
+
+                if (!admin.IsAdmin)
+                    return response.SetUnauthorizedError($"Only admins can create Servers. Id = {request.AdminId}");
 
                 var serverId = await serverRepository.CreateServer(request);
 

@@ -11,5 +11,7 @@ namespace MagmaSafe.Borders.Repositories
         Task<List<Secret>> GetSecretsByServerId(string id);
         Task<int> GetCountFromSecret(string where);
         Task<string> CreateSecret(CreateSecretRequest request);
+        Task<List<Secret>> GetSecretsByUserId(string id);
+        Task<bool> UpdateLastAccessedByUser(UpdateLastAccessedByUserRequest request);
     }
 }

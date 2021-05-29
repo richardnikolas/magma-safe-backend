@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MagmaSafe.Borders.Dtos.User;
 using MagmaSafe.Borders.Shared;
@@ -23,6 +24,11 @@ namespace MagmaSafe.UseCases.User
 
             try
             {
+                if (Constants.ForbiddenWords.Any(request.Name.ToLower().Contains))
+                {
+                    return response.SetInternalServerError($"You tried to create an artifact with one or more forbidden words.");
+                }
+
                 var userId = await userRepository.CreateUser(request);
 
                 if (userId != null)

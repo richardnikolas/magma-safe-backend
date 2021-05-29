@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 using MagmaSafe.Borders.UseCases.Server;
 using MagmaSafe.Borders.Dtos.Server;
 using MagmaSafe.Borders.Repositories;
@@ -13,15 +14,19 @@ namespace MagmaSafe.UseCases.Server
     { 
         private readonly IServerRepository serverRepository;
         private readonly ISecretRepository secretRepository;
-        private readonly IServersOfUserRepository serversOfUserRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IServersOfUserRepository serversOfUserRepository;        
 
         public GetServersByUserIdUseCase(
             IServerRepository serverRepository,
             ISecretRepository secretRepository,
-            IServersOfUserRepository serversOfUserRepository) 
+            IUserRepository userRepository,
+            IServersOfUserRepository serversOfUserRepository
+            ) 
         {
             this.serverRepository = serverRepository;
             this.secretRepository = secretRepository;
+            this.userRepository = userRepository;
             this.serversOfUserRepository = serversOfUserRepository;
         }
 
@@ -31,18 +36,23 @@ namespace MagmaSafe.UseCases.Server
 
             try 
             {
+                if (!Guid.TryParse(userId, out Guid result))
+                    return response.SetBadRequest($"Invalid Guid passed as parameter. Request value = '{userId}'");
+
                 List<ServerDTO> serverDTOs = new List<ServerDTO>();
 
                 List<Borders.Entities.Server> servers = await serverRepository.GetServersByUserId(userId);                
 
-                if (servers != null)
+                if (servers != null && servers.Count > 0)
                 {
                     foreach(Borders.Entities.Server server in servers)
                     {
                         var secretsCount = await secretRepository.GetCountFromSecret($"WHERE serverId = '{server.Id}'");
-                        var usersCount = await serversOfUserRepository.GetCountFromServersOfUsers($"WHERE serverId = '{server.Id}'");
+                        var serversOfUsers = await serversOfUserRepository.GetServersOfUsersByServerId($"WHERE serverId = '{server.Id}'");
+                        var admin = await userRepository.GetById(server.AdminId);
+                        var isFavorite = serversOfUsers.SingleOrDefault(s => (s.ServerId == server.Id && s.UserId == userId))?.IsFavorite ?? false;
 
-                        var newServerDto = new ServerDTO(server, false, secretsCount, usersCount);
+                        var newServerDto = new ServerDTO(server, isFavorite, secretsCount, serversOfUsers.Count, admin.Name);
 
                         serverDTOs.Add(newServerDto);
                     }
